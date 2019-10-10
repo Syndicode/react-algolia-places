@@ -1,0 +1,28 @@
+{
+  "name": "@syndicode/react-algolia-places",
+  "version": "1.0.0",
+  "description": "Modern ReactJS component that provides functionality of Algoliasearch Places API",
+  "main": "bundle.js",
+  "scripts": {
+    "bundle": "rollup --config rollup.config.js",
+    "prepublish": "npm run bundle"
+  },
+  "devDependencies": {
+    "rollup": "^1.23.1",
+    "rollup-plugin-peer-deps-external": "^2.2.0"
+  },
+  "peerDependencies": {
+    "react": "^16.10.1",
+    "algoliasearch": "^16.10.1"
+  },
+  "keywords": [
+    "algoliasearch",
+    "places",
+    "maps",
+    "geo"
+  ],
+  "authors": [
+    "Anton Rusinov <anton.rusinov@syndicode.com> (https://github.com/RusinovAnton)"
+  ],
+  "license": "MIT"
+}
