@@ -1,11 +1,11 @@
 {
   "name": "@syndicode/react-algolia-places",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Modern ReactJS component that provides functionality of Algoliasearch Places API",
   "main": "bundle.js",
   "repository": {
-    "type" : "git",
-    "url" : "https://github.com/Syndicode/react-algolia-places"
+    "type": "git",
+    "url": "https://github.com/Syndicode/react-algolia-places"
   },
   "scripts": {
     "bundle": "rollup --config rollup.config.js",
