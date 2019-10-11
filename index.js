@@ -17,14 +17,14 @@ const AlgoliaPlaces = ({
   hitTransformer = transformHit,
   onSelect = noop,
   render,
-  searchConfig,
+  searchParams,
 }) => {
   // Setup algoliasearch placesClient client
   const placesClient = useMemo(() => algoliasearch.initPlaces(appId, apiKey), [
     appId,
     apiKey,
   ]);
-  const searchPlace = query => placesClient.search(query, searchConfig);
+  const searchPlace = query => placesClient.search(query, searchParams);
 
   // Setup hooks
   const [error, setError] = useState(null);
@@ -33,7 +33,7 @@ const AlgoliaPlaces = ({
   const [options, setOptions] = useState(null);
   useEffect(() => {
     const getPlaceObject = objectID =>
-      placesClient.getObject(objectID, searchConfig);
+      placesClient.getObject(objectID, searchParams);
 
     const getPlaceById = async defaultValue => {
       setLoading(true);
@@ -57,7 +57,7 @@ const AlgoliaPlaces = ({
     formatInputValue,
     hitTransformer,
     placesClient,
-    searchConfig,
+    searchParams,
   ]);
 
   const clear = () => {

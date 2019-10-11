@@ -25,7 +25,7 @@ yarn add @syndicode/react-algolia-places
   onSelect={objectID => {
     console.log(objectID);
   }}
-  searchConfig={searchConfig}
+  searchParams={searchParams}
 >
   {({ clear, error, loading, options, getInputProps, getOptionProps }) => (
     <>
@@ -49,7 +49,7 @@ apiKey: String
 appId: String # Your algolia's app apiKey and appId
 defaultValue: String # Pass down objectID to prefetch result and fill in the input
 onSelect(objectID: String, option: Option): String #
-searchConfig: SearchConfig
+searchParams: searchParams
 render | children - render prop
 formatInputValue(hit: Hit): String - redefine default transformer for the inputs value on option select
 hitTransformer(hit: Hit): Option - redefine default transformer for formatted option
@@ -79,4 +79,7 @@ type Option {
 }
 ```
 
-See algolia places docs of hit's shape here: https://community.algolia.com/places/api-clients.html#json-answer
+See algolia docs for more info
+
+- search params options - https://community.algolia.com/places/api-clients.html#search-parameters
+- hit's shape - https://community.algolia.com/places/api-clients.html#json-answer
