@@ -12,12 +12,6 @@ module.exports = {
         react: "react",
         algoliasearch: "algoliasearch",
       },
-      plugins: [
-        babel({
-          exclude: "node_modules/**",
-          presets: ["@babel/env", { modules: false }],
-        }),
-      ],
     },
     {
       file: "./build/bundle.es.js",
@@ -28,5 +22,11 @@ module.exports = {
       format: "cjs",
     },
   ],
-  plugins: [peerDepsExternal()],
+  plugins: [
+    peerDepsExternal(),
+    babel({
+      exclude: "node_modules/**",
+      presets: ["@babel/env"],
+    }),
+  ],
 };
