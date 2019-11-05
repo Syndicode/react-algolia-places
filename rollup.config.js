@@ -15,7 +15,10 @@ module.exports = {
       plugins: [
         babel({
           exclude: "node_modules/**",
-          presets: ["@babel/env", { modules: false }],
+          presets: [
+            "@babel/preset-env",
+            { modules: false, targets: { browsers: "not dead" } },
+          ],
         }),
       ],
     },
