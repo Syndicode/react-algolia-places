@@ -15,6 +15,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.7.0",
+    "@babel/preset-env": "^7.7.1",
     "rollup": "^1.23.1",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-peer-deps-external": "^2.2.0"
