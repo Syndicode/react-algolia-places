@@ -1,13 +1,38 @@
 const peerDepsExternal = require("rollup-plugin-peer-deps-external");
+const babel = require("rollup-plugin-babel");
 
-module.exports = {
-  input: "index.js",
-  output: {
-    file: "bundle.js",
-    format: "cjs",
-    exports: "default"
+module.exports = [
+  {
+    input: "./src/index.js",
+    output: {
+      file: "./build/bundle.umd.js",
+      format: "umd",
+      name: "ReactAlgoliaPlaces",
+      globals: {
+        react: "react",
+        algoliasearch: "algoliasearch",
+      },
+    },
+    plugins: [
+      peerDepsExternal(),
+      babel({
+        exclude: "node_modules/**",
+        presets: ["@babel/env"],
+      }),
+    ],
   },
-  plugins: [
-    peerDepsExternal()
-  ]
-};
+  {
+    input: "./src/index.js",
+    output: [
+      {
+        file: "./build/bundle.es.js",
+        format: "esm",
+      },
+      {
+        file: "./build/bundle.cjs.js",
+        format: "cjs",
+      },
+    ],
+    plugins: [peerDepsExternal()],
+  },
+];
