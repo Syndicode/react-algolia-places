@@ -34,7 +34,7 @@ yarn add @syndicode/react-algolia-places
         {options &&
           options.map(option => {
             // NOTE: you have to pass the option down to the getOptionProps() method
-            return <li {...getOptionProps(option)}>{option.city}</li>;
+            return <li {...getOptionProps(option)} key={option.objectID}>{option.city}</li>;
           })}
       </ul>
     </>
