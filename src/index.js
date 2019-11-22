@@ -1,31 +1,23 @@
 import { useEffect, useState, useMemo } from "react";
-import algoliasearch from "algoliasearch";
 
 import {
   transformHit,
-  formatInputValue as defaultFormatInputValue,
+  formatInputValue as defaultFormatInputValue
 } from "./utils";
 
 const noop = () => {};
 
 const AlgoliaPlaces = ({
-  apiKey,
-  appId,
   children,
   defaultValue,
   formatInputValue = defaultFormatInputValue,
-  transformItems = transformHit,
   onSelect = noop,
   render,
+  searchClient,
   searchParams,
+  transformItems = transformHit
 }) => {
-  // Setup algoliasearch placesClient client
-  const placesClient = useMemo(() => algoliasearch.initPlaces(appId, apiKey), [
-    appId,
-    apiKey,
-  ]);
-  const searchPlace = query => placesClient.search(query, searchParams);
-
+  const searchPlace = query => searchClient.search(query, searchParams);
   // Setup hooks
   const [error, setError] = useState(null);
   const [inputValue, setInputValue] = useState("");
@@ -57,7 +49,7 @@ const AlgoliaPlaces = ({
     formatInputValue,
     transformItems,
     placesClient,
-    searchParams,
+    searchParams
   ]);
 
   const clear = () => {
@@ -91,12 +83,11 @@ const AlgoliaPlaces = ({
                 setError(error);
               });
           }
-        },
+        }
       };
     },
     getOptionProps(option) {
       const { city, country, objectID } = option;
-
       return {
         title: option.formatted,
         disabled: loading,
@@ -104,9 +95,9 @@ const AlgoliaPlaces = ({
           setOptions(null);
           setInputValue(formatInputValue(city, country));
           onSelect(objectID, option);
-        },
+        }
       };
-    },
+    }
   });
 };
 
