@@ -14,7 +14,7 @@ const AlgoliaPlaces = ({
   children,
   defaultValue,
   formatInputValue = defaultFormatInputValue,
-  hitTransformer = transformHit,
+  transformItems = transformHit,
   onSelect = noop,
   render,
   searchParams,
@@ -40,7 +40,7 @@ const AlgoliaPlaces = ({
       getPlaceObject(defaultValue)
         .then(result => {
           setLoading(false);
-          const { city, country } = hitTransformer(result);
+          const { city, country } = transformItems(result);
           setInputValue(formatInputValue(city, country));
         })
         .catch(error => {
@@ -55,7 +55,7 @@ const AlgoliaPlaces = ({
   }, [
     defaultValue,
     formatInputValue,
-    hitTransformer,
+    transformItems,
     placesClient,
     searchParams,
   ]);
@@ -83,7 +83,7 @@ const AlgoliaPlaces = ({
             searchPlace(query)
               .then(results => {
                 setLoading(false);
-                const optionsList = results.hits.map(hitTransformer);
+                const optionsList = results.hits.map(transformItems);
                 setOptions(optionsList);
               })
               .catch(error => {
