@@ -25,7 +25,7 @@ const AlgoliaPlaces = ({
   const [options, setOptions] = useState(null);
   useEffect(() => {
     const getPlaceObject = objectID =>
-      placesClient.getObject(objectID, searchParams);
+      searchClient.getObject(objectID, searchParams);
 
     const getPlaceById = async defaultValue => {
       setLoading(true);
@@ -48,7 +48,7 @@ const AlgoliaPlaces = ({
     defaultValue,
     formatInputValue,
     transformItems,
-    placesClient,
+    searchClient,
     searchParams
   ]);
 
