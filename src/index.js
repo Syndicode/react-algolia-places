@@ -17,8 +17,6 @@ const AlgoliaPlaces = ({
   searchParams,
   transformItems = transformHit
 }) => {
-  const searchPlace = query => searchClient.search(query, searchParams);
-  // Setup hooks
   const [error, setError] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,6 +49,14 @@ const AlgoliaPlaces = ({
     searchClient,
     searchParams
   ]);
+
+  if (!searchClient) {
+    throw new Error(
+      "`searchClient` is required. Provide initialized client: `algoliasearch.initPlaces(placesAppId, placesApiKey)`"
+    );
+  }
+
+  const searchPlace = query => searchClient.search(query, searchParams);
 
   const clear = () => {
     onSelect(null);
