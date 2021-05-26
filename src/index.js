@@ -1,46 +1,36 @@
 import { useEffect, useState, useMemo } from "react";
-import algoliasearch from "algoliasearch";
 
 import {
   transformHit,
-  formatInputValue as defaultFormatInputValue,
+  formatInputValue as defaultFormatInputValue
 } from "./utils";
 
 const noop = () => {};
 
 const AlgoliaPlaces = ({
-  apiKey,
-  appId,
   children,
   defaultValue,
   formatInputValue = defaultFormatInputValue,
-  hitTransformer = transformHit,
   onSelect = noop,
   render,
+  searchClient,
   searchParams,
+  transformItems = transformHit
 }) => {
-  // Setup algoliasearch placesClient client
-  const placesClient = useMemo(() => algoliasearch.initPlaces(appId, apiKey), [
-    appId,
-    apiKey,
-  ]);
-  const searchPlace = query => placesClient.search(query, searchParams);
-
-  // Setup hooks
   const [error, setError] = useState(null);
   const [inputValue, setInputValue] = useState("");
   const [loading, setLoading] = useState(false);
   const [options, setOptions] = useState(null);
   useEffect(() => {
     const getPlaceObject = objectID =>
-      placesClient.getObject(objectID, searchParams);
+      searchClient.getObject(objectID, searchParams);
 
     const getPlaceById = async defaultValue => {
       setLoading(true);
       getPlaceObject(defaultValue)
         .then(result => {
           setLoading(false);
-          const { city, country } = hitTransformer(result);
+          const { city, country } = transformItems(result);
           setInputValue(formatInputValue(city, country));
         })
         .catch(error => {
@@ -55,10 +45,18 @@ const AlgoliaPlaces = ({
   }, [
     defaultValue,
     formatInputValue,
-    hitTransformer,
-    placesClient,
-    searchParams,
+    transformItems,
+    searchClient,
+    searchParams
   ]);
+
+  if (!searchClient) {
+    throw new Error(
+      "`searchClient` is required. Provide initialized client: `algoliasearch.initPlaces(placesAppId, placesApiKey)`"
+    );
+  }
+
+  const searchPlace = query => searchClient.search(query, searchParams);
 
   const clear = () => {
     onSelect(null);
@@ -83,7 +81,7 @@ const AlgoliaPlaces = ({
             searchPlace(query)
               .then(results => {
                 setLoading(false);
-                const optionsList = results.hits.map(hitTransformer);
+                const optionsList = results.hits.map(transformItems);
                 setOptions(optionsList);
               })
               .catch(error => {
@@ -91,12 +89,11 @@ const AlgoliaPlaces = ({
                 setError(error);
               });
           }
-        },
+        }
       };
     },
     getOptionProps(option) {
       const { city, country, objectID } = option;
-
       return {
         title: option.formatted,
         disabled: loading,
@@ -104,9 +101,9 @@ const AlgoliaPlaces = ({
           setOptions(null);
           setInputValue(formatInputValue(city, country));
           onSelect(objectID, option);
-        },
+        }
       };
-    },
+    }
   });
 };
 
